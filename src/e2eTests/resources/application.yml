@@ -1,0 +1,6 @@
+spring:
+  jpa:
+    show-sql: true
+    defer-datasource-initialization: true
+  datasource:
+    url: jdbc:sqlite:sample.db
