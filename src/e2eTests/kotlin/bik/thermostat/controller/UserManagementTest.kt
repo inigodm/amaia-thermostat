@@ -1,5 +1,6 @@
 package bik.thermostat.controller
 
+import bik.thermostat.utils.DBUtil
 import http.Petition
 import db.DBSetup
 import org.junit.jupiter.api.*
@@ -8,7 +9,6 @@ class UserManagementTest {
     val URL = "http://localhost:8080/user"
     val data = "{\"username\":\"user\", \"password\":\"pass\"}"
     val deleteData = "{\"username\":\"user\"}"
-    val BD_CONNECTION_URL = "jdbc:sqlite:/home/inigo/code/thermostat/db/thermostat.db"
     val APPLICATION_JSON = "application/json"
 
     @BeforeEach
@@ -26,7 +26,7 @@ class UserManagementTest {
             .sendAPost(data)
         //THEN
         response.assertThatResponseIsOk()
-        var res = DBSetup(BD_CONNECTION_URL)
+        var res = DBSetup(DBUtil.BD_CONNECTION_URL)
             .`when`("select * from users where username = 'user'")
             .assertThatNumberOfResponses(1)
             .assertThatExistAEntryWithFields(mapOf("USERNAME" to "user"))
