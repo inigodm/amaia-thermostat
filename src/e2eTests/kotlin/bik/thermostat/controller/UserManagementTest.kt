@@ -26,7 +26,21 @@ class UserManagementTest {
             .sendAPost(data)
         //THEN
         response.assertThatResponseIsOk()
-        var res = DBSetup(DBUtil.BD_CONNECTION_URL)
+        DBSetup(DBUtil.BD_CONNECTION_URL)
+            .`when`("select * from users where username = 'user'")
+            .assertThatNumberOfResponses(1)
+            .assertThatExistAEntryWithFields(mapOf("USERNAME" to "user"))
+    }
+
+    @Test
+    fun `should change the password`() {
+        // WHEN
+        val response = Petition.to(URL)
+            .withContentType(APPLICATION_JSON)
+            .sendAPut(data)
+        //THEN
+        response.assertThatResponseIsOk()
+        DBSetup(DBUtil.BD_CONNECTION_URL)
             .`when`("select * from users where username = 'user'")
             .assertThatNumberOfResponses(1)
             .assertThatExistAEntryWithFields(mapOf("USERNAME" to "user"))

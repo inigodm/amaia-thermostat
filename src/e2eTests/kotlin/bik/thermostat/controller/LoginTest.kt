@@ -38,7 +38,7 @@ class LoginTest {
     }
 
     @Test
-    fun should_login_user() {
+    fun `should login user`() {
         //https://blog.softtek.com/es/autenticando-apis-con-spring-y-jwt
         val response = Petition.to(URL_LOGIN)
             .withContentType(HttpUtil.APPLICATION_JSON)

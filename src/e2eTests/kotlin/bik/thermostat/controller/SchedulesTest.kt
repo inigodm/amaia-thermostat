@@ -26,10 +26,10 @@ class SchedulesTest {
         DBSetup(DBUtil.BD_CONNECTION_URL)
             .`when`("select * from schedules where weekdays = 'L,M,X'")
             .assertThatNumberOfResponses(1)
-            .assertThatExistAEntryWithFields(mapOf("startAt" to "20:00"))
-            .assertThatExistAEntryWithFields(mapOf("endAt" to "23:00"))
-            .assertThatExistAEntryWithFields(mapOf("desiredTemp" to "18"))
-            .assertThatExistAEntryWithFields(mapOf("active" to "1"))
+            .assertThatExistAEntryWithFields(mapOf("startAt" to "20:00",
+                                                    "endAt" to "23:00",
+                                                    "desiredTemp" to "18",
+                                                    "active" to "1"))
     }
 
     @Test
