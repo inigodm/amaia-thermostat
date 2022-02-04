@@ -11,6 +11,8 @@ class SchedulesTest {
     val data2 = "{\"weekdays\":\"J,V\", \"startAt\":\"20:00\", \"endAt\":\"23:00\", \"desiredTemp\":18, \"active\":1}"
     val SCHEDULE_URL = "schedules"
 
+    fun dataUpdated(id: String) = "{\"${id}\"\"weekdays\":\"J,V,S,D\", \"startAt\":\"20:00\", \"endAt\":\"23:00\", \"desiredTemp\":18, \"active\":1}"
+
     @BeforeEach
     fun setup() {
         DBSetup(DBUtil.BD_CONNECTION_URL).given("delete from schedules where 1 = 1")
@@ -30,6 +32,28 @@ class SchedulesTest {
                                                     "endAt" to "23:00",
                                                     "desiredTemp" to "18",
                                                     "active" to "1"))
+    }
+
+    @Test
+    fun `should update a schedule`() {
+        val id = makeLoggedPetitionTo(SCHEDULE_URL)
+            .sendAPost(data)
+            .assertThatResponseIsOk()
+            .assertThatBodyContains("id")
+            .body()["id"].toString()
+
+        makeLoggedPetitionTo(SCHEDULE_URL)
+            .sendAPut(dataUpdated(id))
+            .assertThatResponseIsOk()
+            .assertThatBodyContains("id")
+
+        DBSetup(DBUtil.BD_CONNECTION_URL)
+            .`when`("select * from schedules where weekdays = 'J,V,S,D'")
+            .assertThatNumberOfResponses(1)
+            .assertThatExistAEntryWithFields(mapOf("startAt" to "20:00",
+                "endAt" to "23:00",
+                "desiredTemp" to "18",
+                "active" to "1"))
     }
 
     @Test

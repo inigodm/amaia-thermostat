@@ -25,12 +25,11 @@ configurations {
 
 apply(from = "./e2eTests.gradle")
 
-repositories {
-    maven {
-        url = uri("${projectDir}/libs")
+allprojects {
+    repositories {
+        mavenCentral()
+        maven { url = uri("https://jitpack.io") }
     }
-    mavenLocal()
-    mavenCentral()
 }
 
 dependencies {
