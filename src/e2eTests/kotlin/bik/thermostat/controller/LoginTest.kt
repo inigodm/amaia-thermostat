@@ -1,6 +1,8 @@
 package bik.thermostat.controller
 
+import bik.thermostat.utils.DBUtil
 import bik.thermostat.utils.HttpUtil
+import db.DBSetup
 import http.Petition
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -29,9 +31,7 @@ class LoginTest {
 
     @BeforeEach
     fun setup() {
-        Petition.to(URL)
-            .withContentType(HttpUtil.APPLICATION_JSON)
-            .sendADelete(deleteData)
+        DBSetup(DBUtil.BD_CONNECTION_URL).givenEmptyTable("users")
         Petition.to(URL)
             .withContentType(HttpUtil.APPLICATION_JSON)
             .sendAPost(data)
@@ -69,7 +69,7 @@ class LoginTest {
     }
 
     @Test
-    fun should_response_with_a_403_if_not_logged() {
+    fun should_response_with_a_401_if_not_logged() {
         //https://blog.softtek.com/es/autenticando-apis-con-spring-y-jwt
         Petition.to(URL_SCHEDULE)
             .withContentType(HttpUtil.APPLICATION_JSON)

@@ -15,7 +15,7 @@ class DBUtils {
     @Throws(ThermostatException::class)
     fun executeUpdate(sql: String?) {
         try {
-            println("connectiong to $BD_CONNECTION_URL" )
+            println("connecting to $BD_CONNECTION_URL" )
             connect(BD_CONNECTION_URL)
                 .use { conn -> conn.createStatement().use { stmt -> stmt.executeUpdate(sql) } }
         } catch (e: SQLException) {
@@ -52,7 +52,7 @@ class DBUtils {
 
     @Throws(ThermostatException::class)
     fun executeQuery(sql: String?, function : (PreparedStatement) -> ResultSet): ResultSet {
-        var rs: ResultSet
+        val rs: ResultSet
         try {
             rs = connect(BD_CONNECTION_URL)
                 .use { conn -> conn.prepareStatement(sql).use { stmt -> function.invoke(stmt) } }

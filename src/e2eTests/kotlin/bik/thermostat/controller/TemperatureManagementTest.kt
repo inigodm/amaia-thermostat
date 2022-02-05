@@ -22,6 +22,6 @@ class TemperatureManagementTest {
         
         response
             .assertThatResponseIsOk()
-            .assertThatBodyContains(mapOf<String, Any?>("roomTemperature" to (responseInit["roomTemperature"] as Int - 1)))
+            .assertThatBodyContains(mapOf<String, Any?>("roomTemperature" to (responseInit["roomTemperature"] as Int + 1)))
     }
 }

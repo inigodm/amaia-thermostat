@@ -15,7 +15,7 @@ class SchedulesTest {
 
     @BeforeEach
     fun setup() {
-        DBSetup(DBUtil.BD_CONNECTION_URL).given("delete from schedules where 1 = 1")
+        DBSetup(DBUtil.BD_CONNECTION_URL).givenEmptyTable("schedules")
     }
 
     @Test
@@ -27,7 +27,7 @@ class SchedulesTest {
 
         DBSetup(DBUtil.BD_CONNECTION_URL)
             .`when`("select * from schedules where weekdays = 'L,M,X'")
-            .assertThatNumberOfResponses(1)
+            .assertThatNumberOfResults(1)
             .assertThatExistAEntryWithFields(mapOf("startAt" to "20:00",
                                                     "endAt" to "23:00",
                                                     "desiredTemp" to "18",
@@ -49,7 +49,7 @@ class SchedulesTest {
 
         DBSetup(DBUtil.BD_CONNECTION_URL)
             .`when`("select * from schedules where weekdays = 'J,V,S,D'")
-            .assertThatNumberOfResponses(1)
+            .assertThatNumberOfResults(1)
             .assertThatExistAEntryWithFields(mapOf("startAt" to "20:00",
                 "endAt" to "23:00",
                 "desiredTemp" to "18",

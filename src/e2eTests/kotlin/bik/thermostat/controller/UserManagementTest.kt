@@ -13,9 +13,7 @@ class UserManagementTest {
 
     @BeforeEach
     fun setup() {
-        Petition.to(URL)
-            .withContentType(APPLICATION_JSON)
-            .sendADelete(deleteData)
+        DBSetup(DBUtil.BD_CONNECTION_URL).givenEmptyTable("users")
     }
 
     @Test
@@ -28,7 +26,7 @@ class UserManagementTest {
         response.assertThatResponseIsOk()
         DBSetup(DBUtil.BD_CONNECTION_URL)
             .`when`("select * from users where username = 'user'")
-            .assertThatNumberOfResponses(1)
+            .assertThatNumberOfResults(1)
             .assertThatExistAEntryWithFields(mapOf("USERNAME" to "user"))
     }
 
@@ -42,8 +40,7 @@ class UserManagementTest {
         response.assertThatResponseIsOk()
         DBSetup(DBUtil.BD_CONNECTION_URL)
             .`when`("select * from users where username = 'user'")
-            .assertThatNumberOfResponses(1)
+            .assertThatNumberOfResults(1)
             .assertThatExistAEntryWithFields(mapOf("USERNAME" to "user"))
     }
 }
-
