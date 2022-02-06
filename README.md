@@ -2,18 +2,30 @@
 
 Thermostat to be used in my local raspberrypi 2B (or maybe 3B, because I am thinking on upgrading it to a domotic station)
 
-###To launch:
+The idea is to do E2E test and let amaia put them in green
+
+### To launch:
 
 In root: 
 
 `./gradlew bootRun`
 
-I use a custom library to improve the legibility of tests because I expect my wife to code it so I want to, only, write the e2e tests and let her fulfit them
+We use a custom E2E helper library to make E2E test more semantic and to hide complexity
 
-At the moment library is private, soon it will be in github and I expect that it would end in a common maven repository
+### To launch tests:
 
-###To launch E2Etests:
+`./gradlew test`
+
+### To launch E2Etests:
 
 Launch application and, in another console, launch
 
 `./gradlew e2eTests`
+
+## What do we need to do
+
+- We will have an API for CRU(D?) of users
+- We will need a schedules CRUD
+- We need an endpoint to manage increases/decreases of temperature
+- We should have endpoint to retrieve log info: by days and/or timerange
+
